@@ -3,18 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>A Special Surprise</title>
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Amiri:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&family=Amiri:wght@400;700&display=swap"
         rel="stylesheet">
+
     <style>
+
         :root {
             --primary-color: #ff4d6d;
             --secondary-color: #ff8fa3;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.5);
             --text-color: #590d22;
+            --soft-pink: #fff0f4;
+            --gold: #d4a72c;
         }
 
         * {
@@ -23,38 +28,49 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
-            height: 100%;
+            min-height: 100%;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,.5), transparent 25%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,.4), transparent 25%),
+                linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+
             min-height: 100vh;
             overflow-x: hidden;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             color: var(--text-color);
         }
 
-        /* Ambient Background Animations */
+        /* =========================
+           BACKGROUND
+        ========================= */
+
         .bg-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: fixed;
+            inset: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
             pointer-events: none;
+            overflow: hidden;
         }
 
         .shape {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             animation: float 20s infinite linear;
+            filter: blur(1px);
         }
 
         .shape:nth-child(1) {
@@ -82,6 +98,7 @@
         }
 
         @keyframes float {
+
             0% {
                 transform: translate(0, 0) rotate(0deg);
             }
@@ -95,91 +112,25 @@
             }
         }
 
-        /* Game Container */
-        #game-stage {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            z-index: 10;
+        /* =========================
+           ENVELOPE
+        ========================= */
+
+        #envelope-stage {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 1s ease;
+
+            z-index: 20;
+            width: 100%;
             padding: 1rem;
-        }
 
-        #game-stage.hidden {
-            opacity: 0;
-            pointer-events: none;
-            display: none;
-        }
-
-        .instructions {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-            margin-bottom: 2rem;
             animation: fadeIn 1s ease-out;
-            max-width: 90vw;
-        }
-
-        .instructions h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .instructions p {
-            font-size: 1.2rem;
-        }
-
-        .score-board {
-            margin-top: 1rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        /* Hidden Hearts */
-        .heart-target {
-            position: absolute;
-            font-size: 2.5rem;
-            color: #d62828;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0.8;
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.3));
-            animation: pulse-soft 3s infinite;
-        }
-
-        .heart-target:hover {
-            transform: scale(1.2);
-            color: #ff0000;
-        }
-
-        @keyframes pulse-soft {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
         }
 
         @keyframes fadeIn {
+
             from {
                 opacity: 0;
                 transform: translateY(-20px);
@@ -189,28 +140,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* Envelope Stage */
-        #envelope-stage {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-            opacity: 0;
-            transition: opacity 1.5s ease;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            padding: 1rem;
-        }
-
-        #envelope-stage.visible {
-            display: flex;
-            opacity: 1;
         }
 
         .envelope-container {
@@ -227,76 +156,129 @@
         .envelope {
             width: 300px;
             height: 200px;
+
             max-width: 85vw;
+
             background: #ff4d6d;
             border-radius: 10px;
+
             position: relative;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+            box-shadow:
+                0 15px 35px rgba(89, 13, 34, .25),
+                0 5px 10px rgba(0,0,0,.1);
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             overflow: hidden;
-            transition: all 0.5s ease;
+
+            transition: all .5s ease;
             margin: 0 auto;
         }
 
         .flap {
             position: absolute;
+
             top: 0;
             left: 0;
+
             width: 0;
             height: 0;
+
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
             border-top: 110px solid #ff758f;
+
             transform-origin: top;
-            transition: transform 0.6s ease 0.5s, z-index 0.2s;
+
+            transition:
+                transform .6s ease .5s,
+                z-index .2s;
+
             z-index: 5;
         }
 
         .pocket {
             position: absolute;
+
             bottom: 0;
             left: 0;
+
             width: 0;
             height: 0;
+
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
             border-bottom: 200px solid #ff4d6d;
+
             z-index: 3;
         }
 
         .letter-preview {
             width: 260px;
             height: 180px;
+
             background: white;
+
             position: absolute;
             bottom: 0;
+
             border-radius: 5px;
+
             z-index: 2;
-            transition: transform 0.8s ease 1s;
+
+            transition:
+                transform .8s ease 1s;
+
+            box-shadow: 0 -3px 10px rgba(0,0,0,.08);
         }
 
         .seal {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
+
             background: #d00000;
+
             border-radius: 50%;
+
             position: absolute;
+
             top: 80px;
             left: 130px;
+
             z-index: 6;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             color: #ffcccb;
-            font-size: 1.2rem;
+
+            font-size: 1.15rem;
             font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: opacity 0.5s ease;
+
+            box-shadow:
+                0 3px 8px rgba(0,0,0,.25),
+                inset 0 0 5px rgba(255,255,255,.2);
+
+            transition: opacity .5s ease;
+
+            animation: heartbeat 1.8s infinite;
         }
 
-        /* Open state for envelope */
+        @keyframes heartbeat {
+
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
         .envelope-container.open .flap {
             transform: rotateX(180deg);
             z-index: 1;
@@ -312,43 +294,73 @@
             z-index: 4;
         }
 
+        /* =========================
+           OPEN BUTTON
+        ========================= */
+
         .open-btn {
             margin-top: 3rem;
+
             padding: 1rem 3rem;
-            background: white;
+
+            background: rgba(255,255,255,.95);
+
             color: var(--primary-color);
+
             border: none;
             border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
+
+            font-size: 1.3rem;
+            font-weight: 600;
+
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: all 0.3s ease;
+
+            box-shadow:
+                0 5px 15px rgba(255,77,109,.35);
+
+            transition: all .3s ease;
+
             font-family: 'Poppins', sans-serif;
         }
 
         .open-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.6);
-            background: #fff0f3;
+            transform: translateY(-4px) scale(1.03);
+
+            box-shadow:
+                0 10px 25px rgba(255,77,109,.45);
+
+            background: white;
         }
 
-        /* Full Letter View */
+        /* =========================
+           LETTER OVERLAY
+        ========================= */
+
         #letter-view {
             position: fixed;
-            top: 0;
-            left: 0;
+
+            inset: 0;
+
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+
+            background: rgba(35, 5, 15, .55);
+
+            backdrop-filter: blur(7px);
+
             z-index: 50;
+
             display: none;
+
             justify-content: center;
             align-items: center;
+
             opacity: 0;
-            transition: opacity 0.5s ease;
+
+            transition: opacity .5s ease;
+
             padding: 1rem;
+
             overflow-y: auto;
         }
 
@@ -357,115 +369,238 @@
             opacity: 1;
         }
 
+        /* =========================
+           LETTER
+        ========================= */
+
         .love-letter {
-            background: #fff;
-            width: 90%;
-            max-width: 600px;
-            padding: 3rem;
-            border-radius: 5px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,.96),
+                    rgba(255,250,252,.96)
+                );
+
+            width: 92%;
+            max-width: 650px;
+
+            padding: 3rem 3rem 2.5rem;
+
+            border-radius: 12px;
+
             position: relative;
-            background-image: repeating-linear-gradient(white 0px, white 24px, #e9ecef 25px);
-            line-height: 25px;
-            transform: scale(0.8);
-            transition: transform 0.5s ease;
-            max-height: 85vh;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.35);
+
+            background-image:
+                repeating-linear-gradient(
+                    white 0px,
+                    white 31px,
+                    #f1dfe5 32px
+                );
+
+            line-height: 32px;
+
+            transform: scale(.8) translateY(20px);
+
+            transition:
+                transform .6s cubic-bezier(.22,1,.36,1);
+
+            max-height: 88vh;
+
             overflow-y: auto;
+
+            border: 1px solid rgba(255,77,109,.15);
         }
 
         #letter-view.active .love-letter {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+        }
+
+        /* =========================
+           DECORATIVE TOP
+        ========================= */
+
+        .letter-decoration {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            animation: softFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes softFloat {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
         }
 
         .love-letter h2 {
+
             font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
+
+            direction: rtl;
+
+            font-size: 2.4rem;
+
             color: var(--primary-color);
+
             text-align: center;
-            margin-bottom: 2rem;
+
+            margin-bottom: 1.5rem;
+
+            line-height: 1.4;
         }
+
+        /* =========================
+           PARAGRAPHS
+        ========================= */
 
         .love-letter p {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.6rem;
-            color: #333;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
+
+            font-family: 'Amiri', serif;
+
+            direction: rtl;
+
+            text-align: right;
+
+            font-size: 1.35rem;
+
+            color: #3f2730;
+
+            margin-bottom: 1.25rem;
+
+            line-height: 2;
+
+            position: relative;
         }
 
-        .love-letter .arabic-line {
-            font-family: 'Amiri', serif;
-            font-size: 1.6rem;
-            direction: rtl;
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
+        /* =========================
+           IMPORTANT SENTENCES
+        ========================= */
+
+        .highlight {
+
+            background:
+                linear-gradient(
+                    transparent 55%,
+                    rgba(255,143,163,.28) 55%
+                );
+
             font-weight: 700;
+
+            color: #9d1737;
+
+            padding: 0 3px;
         }
+
+        .special-line {
+
+            text-align: center !important;
+
+            font-weight: 700;
+
+            color: var(--primary-color) !important;
+
+            font-size: 1.5rem !important;
+
+            margin: 1.8rem 0 !important;
+
+            line-height: 2 !important;
+        }
+
+        /* =========================
+           FINAL MESSAGE
+        ========================= */
+
+        .final-message {
+
+            margin-top: 1.5rem;
+
+            padding: 1.4rem 1rem;
+
+            text-align: center;
+
+            direction: rtl;
+
+            border-top: 1px solid rgba(255,77,109,.25);
+
+            border-bottom: 1px solid rgba(255,77,109,.25);
+
+            color: var(--primary-color);
+
+            font-family: 'Amiri', serif;
+
+            font-size: 1.55rem;
+
+            font-weight: 700;
+
+            line-height: 2;
+
+            position: relative;
+        }
+
+        .final-message::before {
+            content: "🌸";
+            display: block;
+            margin-bottom: .4rem;
+        }
+
+        .final-message::after {
+            content: "🤍";
+            display: block;
+            margin-top: .4rem;
+        }
+
+        /* =========================
+           CLOSE
+        ========================= */
 
         .close-btn {
+
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
+
+            top: 12px;
+            right: 16px;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            font-size: 1.4rem;
+
             cursor: pointer;
-            color: #aaa;
-            background: none;
+
+            color: #b8a6ab;
+
+            background: rgba(255,255,255,.7);
+
             border: none;
+
+            transition: all .3s ease;
         }
 
         .close-btn:hover {
-            color: #333;
+
+            color: var(--primary-color);
+
+            background: #fff0f4;
+
+            transform: rotate(90deg);
         }
 
-        /* Sparkle animation for finding heart */
-        .sparkle {
-            position: absolute;
-            pointer-events: none;
-            animation: sparkleAnim 0.8s ease-out forwards;
-            font-size: 20px;
-            color: gold;
-        }
+        /* =========================
+           MOBILE
+        ========================= */
 
-        @keyframes sparkleAnim {
-            0% {
-                transform: scale(0) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(2) rotate(180deg);
-                opacity: 0;
-            }
-        }
-
-        /* ===== Mobile Responsiveness ===== */
         @media (max-width: 600px) {
-            .instructions {
-                padding: 1.2rem;
-                margin-bottom: 1rem;
-            }
-
-            .instructions h1 {
-                font-size: 2.2rem;
-            }
-
-            .instructions p {
-                font-size: 1rem;
-            }
-
-            .score-board {
-                font-size: 1.2rem;
-            }
-
-            .hiding-spots-container {
-                gap: 1rem !important;
-                padding: 10px !important;
-            }
-
-            .hiding-spot {
-                font-size: 2.3rem !important;
-            }
 
             .envelope {
                 width: 260px;
@@ -499,38 +634,47 @@
 
             .open-btn {
                 margin-top: 2rem;
-                padding: 0.8rem 2.2rem;
-                font-size: 1.2rem;
+                padding: .85rem 2.2rem;
+                font-size: 1.15rem;
             }
 
             .love-letter {
-                padding: 1.8rem 1.5rem;
+
+                width: 94%;
+
+                padding:
+                    2.4rem 1.35rem 2rem;
+
+                max-height: 90vh;
+            }
+
+            .letter-decoration {
+                font-size: 1.1rem;
+                letter-spacing: 5px;
             }
 
             .love-letter h2 {
-                font-size: 1.8rem;
-                margin-bottom: 1.2rem;
+                font-size: 1.9rem;
+                margin-bottom: 1.1rem;
             }
 
             .love-letter p {
                 font-size: 1.15rem;
+                line-height: 2;
                 margin-bottom: 1rem;
             }
 
-            .love-letter .arabic-line {
+            .special-line {
+                font-size: 1.25rem !important;
+            }
+
+            .final-message {
                 font-size: 1.3rem;
-                margin-bottom: 1rem;
+                padding: 1.2rem .6rem;
             }
         }
 
         @media (max-width: 380px) {
-            .instructions h1 {
-                font-size: 1.8rem;
-            }
-
-            .hiding-spot {
-                font-size: 2rem !important;
-            }
 
             .envelope {
                 width: 220px;
@@ -560,299 +704,349 @@
                 width: 30px;
                 height: 30px;
             }
+
+            .love-letter {
+                padding: 2.2rem 1rem 1.7rem;
+            }
+
+            .love-letter p {
+                font-size: 1.05rem;
+            }
         }
+
+        /* =========================
+           FLOATING PETALS
+        ========================= */
+
+        .petal {
+
+            position: fixed;
+
+            top: -20px;
+
+            pointer-events: none;
+
+            z-index: 100;
+
+            animation:
+                fall linear forwards,
+                sway ease-in-out infinite;
+        }
+
+        @keyframes fall {
+
+            to {
+                top: 110vh;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes sway {
+
+            0%,100% {
+                margin-left: 0;
+            }
+
+            50% {
+                margin-left: 40px;
+            }
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- Background Shapes -->
+    <!-- BACKGROUND -->
+
     <div class="bg-shapes">
         <div class="shape"></div>
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
 
-    <!-- Game Stage -->
-    <div id="game-stage">
-        <div class="instructions">
-            <h1>Find My Heart</h1>
-            <p>I've hidden 3 hearts inside these gifts and surprises.<br>Click them to find where my heart lies!</p>
-            <div class="score-board">Hearts Found: <span id="counter">0</span>/3</div>
-        </div>
 
-        <!-- Hiding Spots Container -->
-        <div class="hiding-spots-container">
-            <!-- Generated by JS -->
-        </div>
-    </div>
+    <!-- ENVELOPE -->
 
-    <!-- Envelope Stage -->
     <div id="envelope-stage">
+
         <div class="envelope-container" id="envelope">
+
             <div class="envelope">
+
                 <div class="pocket"></div>
-                <!-- The letter inside -->
+
                 <div class="letter-preview"></div>
+
                 <div class="flap"></div>
-                <div class="seal">❤️</div>
+
+                <div class="seal">
+                    ❤️
+                </div>
+
             </div>
+
         </div>
-        <button class="open-btn" onclick="openEnvelope()">Open Me</button>
+
+
+        <button class="open-btn" onclick="openEnvelope()">
+            Open Me 💌
+        </button>
+
     </div>
 
-    <!-- Full Letter View -->
+
+
+    <!-- LETTER -->
+
     <div id="letter-view">
+
         <div class="love-letter">
-            <button class="close-btn" onclick="closeLetter()">×</button>
-            <h2>Ma Chère Ingénieure, 👩‍💻⚙️💕</h2>
-            <p>Je veux que tu saches que je t'aime. 🥰❤️</p>
-            <p>Tu es une belle personne 🌸, qui sait si bien parler 💬✨, et qui a toujours cette patience 🕊️ qui me touche. Je veux te voir heureuse 😊, toujours avec ce sourire qui illumine tout ☀️.</p>
-            <p>Je te souhaite de devenir la meilleure ingénieure 👩‍💻🏆, avec une vie stable et pleine de réussite 🌟. Que Dieu te protège toujours 🤲💫.</p>
-            <p>Et moi, je serai là pour te soutenir dans tout ce que tu entreprends 💪❤️.</p>
-            <p class="arabic-line">ابتسمي، فلا جميلة إلا أنتِ 😊🌹💙</p>
-            <p style="text-align: right;">- Pour toujours ✨</p>
+
+            <button
+                class="close-btn"
+                onclick="closeLetter()">
+                ×
+            </button>
+
+
+            <div class="letter-decoration">
+                ✨ 🌸 ✨
+            </div>
+
+
+            <h2>
+                إلى إنسانة مميزة 🤍
+            </h2>
+
+
+            <p>
+                بغيت نقول ليك واحد الحاجة من قلبي،
+                ويمكن ما عمرني عبرت ليك عليها بهاد الشكل...
+            </p>
+
+
+            <p>
+
+                أنا عارفتك، وعارف أن
+                <span class="highlight">
+                    قلبك أبيض بزاف
+                </span>،
+                وعارف أنك من الناس اللي كيحاولو ديما
+                يجبروا خاطر اللي قدامهم، بكلمة زوينة،
+                بابتسامة، أو حتى غير بوجودك.
+
+                كتقدري تخلي الإنسان يبتاسم
+                فواحد الوقت اللي يمكن حتى نتي
+                ما تكونيش فيه بخير. 🤍
+
+            </p>
+
+
+            <p>
+
+                وعارف أنك كتدوزي من واحد المرحلة صعيبة،
+                ويمكن كاين بزاف ديال الحوايج اللي كتكتميهم
+                فداخلك وكتكملي ساكتة،
+
+                وكتحاولي تباني قوية حتى فالأوقات
+                اللي كيكون فيها كلشي تقيل عليك. 🌧️
+
+            </p>
+
+
+            <p class="special-line">
+
+                ولكن بغيتك تعرفي حاجة وحدة:
+
+                <br>
+
+                <span class="highlight">
+                    ماتستسلميش. 🤍
+                </span>
+
+            </p>
+
+
+            <p>
+
+                ما تخليش هاد المرحلة تقنعك أن الأمور
+                غادي تبقى ديما هكا.
+
+                راه حتى أصعب الطرق كتوصل لشي بلاصة زوينة،
+                وحتى أطول الانتظارات كيجي نهار
+                وكتفهمي علاش كان خاصك تصبري.
+
+            </p>
+
+
+            <p>
+
+                يمكن الطريق يطول،
+                ويمكن تلقاي فيه صعوبات ما كنتيش متوقعة،
+
+                ولكن ثقي أن الله غادي ييسر ليك أمورك،
+                خطوة بخطوة،
+
+                حتى يجي النهار اللي غادي تلتافتي لوراك
+                وتقولي:
+
+                <span class="highlight">
+                    الحمد لله أنني ما استسلمتش. 🤲✨
+                </span>
+
+            </p>
+
+
+            <p>
+
+                وكنتمنا من قلبي أنك ما تنسايش
+                شكون نتي وسط هاد التعب كامل.
+
+            </p>
+
+
+            <p>
+
+                نتي الإنسانة اللي كتفرح الناس،
+                اللي كتجبر خواطرهم،
+                واللي كتخلي الابتسامة توصل حتى لقلوب الناس
+                بلا ما تحسي. 🌷
+
+            </p>
+
+
+            <p>
+
+                وعلى قد ما كنتي سبب فابتسامة ديال ناس آخرين،
+                نتمنى الحياة حتى هي ترد ليك
+                هاد الابتسامات كلها،
+
+                وتعيشِي الأيام اللي تستاحقي،
+                بأحسن مما كنتي كتتمني. 🌻
+
+            </p>
+
+
+            <p>
+
+                فإلى جاك شي نهار وحسيتي بالطريق طال،
+                غير صبري شوية أخرى…
+
+                وخلي الأمل ديما حاضر.
+
+            </p>
+
+
+            <div class="final-message">
+
+                وما تنسايش تبتاسمي. 😊
+
+                <br>
+
+                حيت ابتسامتك ماشي غير ابتسامة…
+
+                <br>
+
+                ابتسامتك هي كلشي.
+
+            </div>
+
         </div>
+
     </div>
 
-    <style>
-        /* Additional Styles for Hiding Spots */
-        .hiding-spots-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 800px;
-            padding: 20px;
-            z-index: 15;
-            perspective: 1000px;
-        }
 
-        .hiding-spot {
-            font-size: 3.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, opacity 0.3s;
-            position: relative;
-            user-select: none;
-            filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
-        }
-
-        .hiding-spot:hover {
-            transform: scale(1.1) translateY(-5px);
-        }
-
-        .hiding-spot.shaking {
-            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
-            color: #ccc;
-            cursor: default;
-        }
-
-        .hiding-spot.revealed {
-            animation: popOpen 0.5s ease forwards;
-            pointer-events: none;
-        }
-
-        .hidden-heart-popup {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            font-size: 2rem;
-            color: #ff0000;
-            pointer-events: none;
-            z-index: 20;
-        }
-
-        .pop-anim {
-            animation: popHeart 1s ease forwards;
-        }
-
-        @keyframes shake {
-
-            10%,
-            90% {
-                transform: translate3d(-1px, 0, 0);
-            }
-
-            20%,
-            80% {
-                transform: translate3d(2px, 0, 0);
-            }
-
-            30%,
-            50%,
-            70% {
-                transform: translate3d(-4px, 0, 0);
-            }
-
-            40%,
-            60% {
-                transform: translate3d(4px, 0, 0);
-            }
-        }
-
-        @keyframes popOpen {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.2);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(0);
-                opacity: 0;
-            }
-        }
-
-        @keyframes popHeart {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 0;
-            }
-
-            50% {
-                transform: translate(-50%, -150%) scale(2);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translate(-50%, -300%) scale(0);
-                opacity: 0;
-            }
-        }
-
-        /* Adjust game stage layout for grid */
-        #game-stage {
-            display: flex;
-        }
-    </style>
 
     <script>
-        let heartsFound = 0;
-        const totalHearts = 3;
 
-        // Items to hide things in
-        const hidingItems = ['🎁', '🎁', '🎁', '🧸', '🧸', '💐', '💐', '☁️', '💌', '🍬', '🧁', '🌹'];
-        let spots = [];
-
-        window.onload = function () {
-            initGame();
-        };
-
-        function initGame() {
-            const container = document.querySelector('.hiding-spots-container');
-            // Shuffle items
-            hidingItems.sort(() => Math.random() - 0.5);
-
-            // Limit to maybe 12 items on screen for clean look
-            const displayItems = hidingItems.slice(0, 12);
-
-            // Pick 3 random indices to hold hearts
-            let heartIndices = new Set();
-            while (heartIndices.size < 3) {
-                heartIndices.add(Math.floor(Math.random() * displayItems.length));
-            }
-
-            displayItems.forEach((icon, index) => {
-                const spot = document.createElement('div');
-                spot.classList.add('hiding-spot');
-                spot.innerText = icon;
-                spot.dataset.hasHeart = heartIndices.has(index);
-                spot.onclick = () => checkSpot(spot);
-                container.appendChild(spot);
-                spots.push(spot);
-            });
-        }
-
-        function checkSpot(element) {
-            if (element.classList.contains('shaking') || element.classList.contains('revealed')) return;
-
-            if (element.dataset.hasHeart === "true") {
-                // FOUND HEART
-                element.classList.add('revealed');
-
-                // Show floating heart
-                const heart = document.createElement('div');
-                heart.classList.add('hidden-heart-popup', 'pop-anim');
-                heart.innerText = '❤️';
-                element.appendChild(heart);
-
-                // Sparkles at position
-                const rect = element.getBoundingClientRect();
-                createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2);
-
-                heartsFound++;
-                document.getElementById('counter').innerText = heartsFound;
-
-                if (heartsFound === totalHearts) {
-                    setTimeout(revealEnvelope, 1200);
-                }
-            } else {
-                // EMPTY
-                element.classList.add('shaking');
-            }
-        }
-
-        function createSparkles(x, y) {
-            for (let i = 0; i < 8; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.innerText = '✨';
-                sparkle.style.left = (x + (Math.random() * 40 - 20)) + 'px';
-                sparkle.style.top = (y + (Math.random() * 40 - 20)) + 'px';
-                document.body.appendChild(sparkle);
-                setTimeout(() => sparkle.remove(), 800);
-            }
-        }
-
-        function revealEnvelope() {
-            const gameStage = document.getElementById('game-stage');
-            const envelopeStage = document.getElementById('envelope-stage');
-
-            gameStage.classList.add('hidden');
-
-            setTimeout(() => {
-                gameStage.style.display = 'none';
-                envelopeStage.style.display = 'flex';
-                void envelopeStage.offsetWidth;
-                envelopeStage.classList.add('visible');
-            }, 1000);
-        }
+        /* =========================
+           OPEN ENVELOPE
+        ========================= */
 
         function openEnvelope() {
-            const envContainer = document.getElementById('envelope');
-            const letterView = document.getElementById('letter-view');
+
+            const envContainer =
+                document.getElementById('envelope');
+
+            const letterView =
+                document.getElementById('letter-view');
+
             envContainer.classList.add('open');
+
             setTimeout(() => {
+
                 letterView.classList.add('active');
-                createConfetti();
+
+                createPetals();
+
             }, 1500);
         }
 
+
+        /* =========================
+           CLOSE LETTER
+        ========================= */
+
         function closeLetter() {
-            document.getElementById('letter-view').classList.remove('active');
+
+            document
+                .getElementById('letter-view')
+                .classList.remove('active');
         }
 
-        function createConfetti() {
-            const colors = ['#ff4d6d', '#ff8fa3', '#fff', '#gold'];
-            for (let i = 0; i < 50; i++) {
-                const conf = document.createElement('div');
-                conf.style.position = 'fixed';
-                conf.style.left = Math.random() * 100 + 'vw';
-                conf.style.top = -10 + 'px';
-                conf.style.width = '10px';
-                conf.style.height = '10px';
-                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                conf.style.animation = `float ${Math.random() * 3 + 2}s linear forwards`;
-                document.body.appendChild(conf);
-                setTimeout(() => conf.remove(), 5000);
+
+        /* =========================
+           FLOWERS / PETALS
+        ========================= */
+
+        function createPetals() {
+
+            const symbols = [
+                '🌸',
+                '🌷',
+                '✨',
+                '🤍',
+                '💗'
+            ];
+
+            for (let i = 0; i < 25; i++) {
+
+                const petal =
+                    document.createElement('div');
+
+                petal.className = 'petal';
+
+                petal.innerHTML =
+                    symbols[
+                        Math.floor(
+                            Math.random() * symbols.length
+                        )
+                    ];
+
+                petal.style.left =
+                    Math.random() * 100 + 'vw';
+
+                petal.style.fontSize =
+                    (Math.random() * 10 + 12) + 'px';
+
+                petal.style.animationDuration =
+                    (Math.random() * 4 + 5) + 's';
+
+                petal.style.animationDelay =
+                    Math.random() * 2 + 's';
+
+                document.body.appendChild(petal);
+
+                setTimeout(() => {
+                    petal.remove();
+                }, 9000);
             }
         }
+
     </script>
+
 </body>
 
 </html>
